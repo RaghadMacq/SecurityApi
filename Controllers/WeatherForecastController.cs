@@ -5,7 +5,7 @@ namespace SecurityApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize]
+    //[Authorize]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -25,6 +25,7 @@ namespace SecurityApi.Controllers
         public IEnumerable<WeatherForecast> Get()
         {
             Console.WriteLine("Get weather");
+            //throw new Exception("Random Exception");
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

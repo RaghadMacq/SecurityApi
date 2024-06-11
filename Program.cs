@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SecurityApi.Data;
 using SecurityApi.Filters;
+using SecurityApi.Infrastructure;
 using SecurityApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +43,10 @@ builder.Services
 builder.Services.AddIdentityCore<AppUser>()
     .AddEntityFrameworkStores<AppDbContext>().AddApiEndpoints();
 
+// initialise the service in the DI
+//builder.Services.AddExceptionHandler<GlobalExeptionHandler>();
+//builder.Services.AddProblemDetails();
+
 var app = builder.Build();
 
 app.MapIdentityApi<AppUser>();
@@ -54,13 +59,14 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Error");
+    
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+//app.UseExceptionHandler();
 
 app.MapControllers();
 // Use rate limiting middleware
